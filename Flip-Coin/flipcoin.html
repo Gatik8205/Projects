@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip Coin Game</title>
+</head>
+<body>
+    <p>Flip Coin Game</p>
+    <button onclick="playGame('Heads');">
+        Heads
+    </button>
+    <button onclick="playGame('Tails');">
+        Tails
+    </button>
+    <p class="js-move"></p>
+    <script>
+        const score=JSON.parse(localStorage.getItem('score'))||{
+            wins:0,
+            losses:0
+        };
+        function moveShow(guess,result,outcome){
+            document.querySelector('.js-move')
+            .innerHTML=(`You Picked ${guess}.Computer Picked ${result}`);
+        }
+
+        function playGame(guess){
+            const randomNumber=Math.random();
+            let result='';
+            let outcome='';
+            if(randomNumber<0.5){
+                result='Heads';
+            }else{
+                result='Tails';
+            }
+            if(guess===result){
+                outcome='You Win!';
+                score.wins++;
+            }else{
+                outcome='You Lose!';
+                score.losses++;
+            }
+
+        localStorage.setItem('score',JSON.stringify(score));
+
+        alert(`You Picked ${guess}.Computer Picked ${result}. ${outcome}.
+Wins:${score.wins}.Losses:${score.losses}`)
+moveShow(guess,result,outcome);
+        }
+    </script>
+</body>
+</html>
